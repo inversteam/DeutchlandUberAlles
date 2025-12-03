@@ -6,3 +6,4 @@ tags={
 }
 name="Germany Focus Effects Mod"
 supported_version="1.14.*"
+path="mod/germany_focus_mod"
