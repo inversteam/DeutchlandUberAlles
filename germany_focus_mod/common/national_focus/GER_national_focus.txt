@@ -4222,14 +4222,6 @@ focus_tree = {
 			if = {
 				limit = {
 					controls_state = 50
-					50 = {
-						NOT = {
-							has_building = {
-								type = facility_nuclear
-								amount > 0
-							}
-						}
-					}
 				}
 				50 = { #Franken
 					add_building_construction = {
@@ -4609,14 +4601,6 @@ focus_tree = {
 			if = {
 				limit = {
 					controls_state = 60
-					60 = {
-						NOT = {
-							has_building = {
-								type = facility_land
-								amount > 0
-							}
-						}
-					}
 				}
 				60 = { #Sachsen
 					add_building_construction = {
@@ -4943,14 +4927,6 @@ focus_tree = {
 			if = {
 				limit = {
 					controls_state = 59
-					59 = {
-						NOT = {
-							has_building = {
-								type = facility_air
-								amount > 0
-							}
-						}
-					}
 				}
 				59 = { #Hannover
 					add_building_construction = {
@@ -4972,14 +4948,6 @@ focus_tree = {
 			add_breakthrough_progress = {
 				specialization = specialization_air
 				value = 1.0
-			}
-
-			custom_effect_tooltip = generic_skip_one_line_tt
-
-			GER_add_or_modify_wunderwaffen = yes
-			add_to_variable = {
-				GER_wunderwaffen_sp_tag_aircraft_speed_factor = 0.10
-				tooltip = sp_tag_aircraft_speed_factor_tt
 			}
 
 			custom_effect_tooltip = generic_skip_one_line_tt
@@ -6209,14 +6177,6 @@ focus_tree = {
 			if = {
 				limit = {
 					controls_state = 61
-					61 = {
-						NOT = {
-							has_building = {
-								type = facility_air
-								amount > 0
-							}
-						}
-					}
 				}
 				61 = { #Mecklenburg
 					add_building_construction = {
@@ -6294,7 +6254,7 @@ focus_tree = {
 
 			GER_add_or_modify_wunderwaffen = yes
 			add_to_variable = {
-				GER_wunderwaffen_sp_tag_jet_speed_factor = GER_wunderwaffe_research_speed_bonus
+				GER_wunderwaffen_sp_tag_jet_speed_factor = 0.25
 				tooltip = sp_tag_jet_speed_factor_tt
 			}
 

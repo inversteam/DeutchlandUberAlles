@@ -71,18 +71,35 @@
 
 ## Установка
 
-### Метод 1: Ручная установка
+### Быстрая установка
 
 1. Скопируйте папку `germany_focus_mod` в директорию модов HOI4:
    - **Windows**: `Documents\Paradox Interactive\Hearts of Iron IV\mod\`
    - **Linux**: `~/.local/share/Paradox Interactive/Hearts of Iron IV/mod/`
    - **Mac**: `~/Documents/Paradox Interactive/Hearts of Iron IV/mod/`
 
-2. Скопируйте файл `descriptor.mod` в ту же директорию и переименуйте его в `germany_focus_mod.mod`
+2. Скопируйте файл `germany_focus_effects_mod.mod` (из корня репозитория) в ту же директорию:
+   - **Windows**: `Documents\Paradox Interactive\Hearts of Iron IV\mod\germany_focus_effects_mod.mod`
+   - **Linux**: `~/.local/share/Paradox Interactive/Hearts of Iron IV/mod/germany_focus_effects_mod.mod`
+   - **Mac**: `~/Documents/Paradox Interactive/Hearts of Iron IV/mod/germany_focus_effects_mod.mod`
 
 3. Запустите HOI4 и активируйте мод в лаунчере
 
-### Метод 2: Steam Workshop (будет доступен после загрузки)
+**Итоговая структура должна выглядеть так:**
+```
+Documents/Paradox Interactive/Hearts of Iron IV/mod/
+├── germany_focus_effects_mod.mod              <- Файл дескриптора
+└── germany_focus_mod/                         <- Папка с модом
+    ├── descriptor.mod
+    ├── README.md
+    └── common/
+        ├── national_focus/
+        │   └── GER_national_focus.txt
+        └── ideas/
+            └── germany_ideas.txt
+```
+
+### Альтернативный метод: Steam Workshop (будет доступен после загрузки)
 
 Подпишитесь на мод в Steam Workshop через игровой лаунчер
 
