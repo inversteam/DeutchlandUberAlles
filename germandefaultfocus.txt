@@ -4927,10 +4927,6 @@ focus_tree = {
 							instant_build = yes
 							province = 3241 # Hanover
 						}
-						add_victory_points = {
-							province = 3241
-							value = 1
-						}
 					}
 				}
 			}
@@ -6235,10 +6231,6 @@ focus_tree = {
 							level = 1
 							instant_build = yes
 							province = 349 # Schwerin
-						}
-						add_victory_points = {
-							province = 349
-							value = 1
 						}
 					}
 				}
