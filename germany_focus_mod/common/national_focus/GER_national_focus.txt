@@ -4219,15 +4219,23 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			if = {
-				limit = {
-					controls_state = 50
-				}
-				50 = { #Franken
-					add_building_construction = {
-						type = facility_nuclear
-						level = 1
-						instant_build = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						50 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					50 = { #Wurttemberg - Stuttgart
+						add_building_construction = {
+							type = nuclear_facility
+							level = 1
+							instant_build = yes
+						}
 					}
 				}
 			}
@@ -4598,15 +4606,23 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
 
 		completion_reward = {
-			if = {
-				limit = {
-					controls_state = 60
-				}
-				60 = { #Sachsen
-					add_building_construction = {
-						type = facility_land
-						level = 1
-						instant_build = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						60 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					60 = { #Thuringen - Erfurt
+						add_building_construction = {
+							type = land_facility
+							level = 1
+							instant_build = yes
+						}
 					}
 				}
 			}
@@ -4924,15 +4940,23 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
 
 		completion_reward = {
-			if = {
-				limit = {
-					controls_state = 59
-				}
-				59 = { #Hannover
-					add_building_construction = {
-						type = facility_air
-						level = 1
-						instant_build = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						59 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					59 = { #Hannover
+						add_building_construction = {
+							type = air_facility
+							level = 1
+							instant_build = yes
+						}
 					}
 				}
 			}
@@ -6174,15 +6198,23 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			if = {
-				limit = {
-					controls_state = 61
-				}
-				61 = { #Mecklenburg
-					add_building_construction = {
-						type = facility_air
-						level = 1
-						instant_build = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						61 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					61 = { #Mecklenburg - Schwerin
+						add_building_construction = {
+							type = air_facility
+							level = 1
+							instant_build = yes
+						}
 					}
 				}
 			}
@@ -6333,8 +6365,8 @@ focus_tree = {
 					limit = {
 						NOT = { is_special_project_completed = sp_air_intercontinental_bomber }
 					}
-					add_to_variable = { 
-						GER_wunderwaffen_sp_air_intercontinental_bomber_speed_factor = 0.2 #MM: This is the focus of this focus, so extra speed
+					add_to_variable = {
+						GER_wunderwaffen_sp_air_intercontinental_bomber_speed_factor = 0.25 #MM: This is the focus of this focus, so extra speed
 						tooltip = sp_air_intercontinental_bomber_speed_factor_tt
 					}
 				}
@@ -25918,8 +25950,8 @@ focus_tree = {
 				limit = {
 					NOT = { is_special_project_completed = sp:sp_nuclear_reactor }
 				}
-				add_to_variable = { 
-					GER_wunderwaffen_sp_nuclear_reactor_speed_factor = 0.1
+				add_to_variable = {
+					GER_wunderwaffen_sp_nuclear_reactor_speed_factor = 0.25
 					tooltip = sp_nuclear_reactor_speed_factor_tt
 				}
 			}
@@ -25927,8 +25959,8 @@ focus_tree = {
 				limit = {
 					NOT = { is_special_project_completed = sp:sp_commercial_nuclear_reactor }
 				}
-				add_to_variable = { 
-					GER_wunderwaffen_sp_commercial_nuclear_reactor_speed_factor = 0.1
+				add_to_variable = {
+					GER_wunderwaffen_sp_commercial_nuclear_reactor_speed_factor = 0.25
 					tooltip = sp_commercial_nuclear_reactor_speed_factor_tt
 				}
 			}
