@@ -4996,7 +4996,9 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			custom_effect_tooltip = GER_aeronautical_research_institute_facility_tt
+			custom_effect_tooltip = {
+				text = "If there are no other §YExperimental Facilities§! in §YHannover§! (State 59), we will gain §Y1 Aerodynamics and Avionics Facility§!."
+			}
 			hidden_effect = {
 			if = {
 				limit = {
@@ -6287,7 +6289,9 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			custom_effect_tooltip = GER_aerodynamic_research_institute_facility_tt
+			custom_effect_tooltip = {
+				text = "If there are no other §YExperimental Facilities§! in §YMecklenburg§! (State 61), we will gain §Y1 Aerodynamics and Avionics Facility§! in §YSchwerin§!."
+			}
 			hidden_effect = {
 				if = {
 					limit = {
