@@ -2975,7 +2975,7 @@ focus_tree = {
 			effect_tooltip = { #This is done for tooltip purposes
 				add_dynamic_modifier = { modifier = GER_bewegungskrieg_modifier }
 			}
-			IF = {
+			if = {
 				limit = { 
 					has_dlc = "No Compromise, No Surrender"
 					is_faction_leader = yes
@@ -3149,7 +3149,7 @@ focus_tree = {
 
 		completion_reward = {
 			
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Arms Against Tyranny"
 				}
@@ -4234,7 +4234,7 @@ focus_tree = {
 			}
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						60 = {
 							is_fully_controlled_by = ROOT
@@ -4319,7 +4319,7 @@ focus_tree = {
 			effect_tooltip = { #This is done for tooltip purposes
 				add_dynamic_modifier = { modifier = GER_blitzkrieg_modifier }
 			}
-			IF = {
+			if = {
 				limit = { 
 					has_dlc = "No Compromise, No Surrender"
 					is_faction_leader = yes
@@ -4576,9 +4576,130 @@ focus_tree = {
 				}
 			}
 
-			# --- остальные бонусы фокуса без изменений ---
+			# Original focus bonuses
+			add_tech_bonus = {
+				name = GER_expand_kummersdorfs_capacity
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_heavy_armor
+			}
+			add_tech_bonus = {
+				name = GER_expand_kummersdorfs_capacity
+				bonus = 1
+				uses = 1
+				category = cat_medium_armor
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+
+
+			if = {
+				limit = {
+					has_dlc = "No Step Back"
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				create_equipment_variant = {
+					name = "Panther Ausf. A"
+					type = medium_tank_chassis_3
+					design_team = mio:GER_man_organization #We feed on your tears
+					modules = {
+						main_armament_slot = tank_high_velocity_cannon
+						turret_type_slot = tank_medium_three_man_tank_turret
+						suspension_type_slot = tank_interleaved_suspension
+						armor_type_slot = tank_welded_armor
+						engine_type_slot = tank_gasoline_engine
+						special_type_slot_1 = tank_radio_1
+						special_type_slot_2 = sloped_armor
+						special_type_slot_3 = smoke_launchers
+					}
+					upgrades = {
+						tank_nsb_engine_upgrade = 6
+						tank_nsb_armor_upgrade = 4
+					}
+					icon = "GFX_GER_advanced_medium_tank_medium"
+				}
+				create_equipment_variant = {
+					name = "Tiger I Ausf. A"
+					type = heavy_tank_chassis_2
+					design_team = mio:GER_porsche_organization #We feed on your tears
+					modules = {
+						main_armament_slot = tank_heavy_cannon
+						turret_type_slot = tank_heavy_three_man_tank_turret
+						suspension_type_slot = tank_interleaved_suspension
+						armor_type_slot = tank_welded_armor
+						engine_type_slot = tank_gasoline_engine
+						special_type_slot_1 = tank_radio_1
+						special_type_slot_2 = smoke_launchers
+						special_type_slot_3 = additional_machine_guns
+					}
+					upgrades = {
+						tank_nsb_engine_upgrade = 8
+						tank_nsb_armor_upgrade = 6
+					}
+					icon = "GFX_GER_advanced_heavy_tank_medium"
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			GER_add_or_modify_wunderwaffen = yes
+			add_to_variable = {
+				GER_wunderwaffen_sp_tag_tank_speed_factor = GER_wunderwaffe_research_speed_bonus
+				tooltip = sp_tag_tank_speed_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = GER_modify_blitzkrieg_modifier_tt
+			effect_tooltip = {
+				add_to_variable = {
+					GER_blitzkrieg_army_armor_attack_factor = 0.05
+					tooltip = army_armor_attack_factor_tt
+				}
+				add_to_variable = {
+					GER_blitzkrieg_breakthrough_factor = 0.05
+					tooltip = breakthrough_factor_tt
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dlc = "Arms Against Tyranny"}
+				}
+				if = {
+					limit = {
+						has_idea = porsche
+					}
+					swap_ideas = {
+						remove_idea = porsche
+						add_idea = GER_porsche_improved
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = porsche
+							add_idea = GER_porsche_improved
+						}
+					}
+				}
+			}
+			else = {
+				mio:GER_porsche_organization = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+
+					#unlock_mio_trait_tooltip =
+					#unlock_mio_trait_tooltip =
+				}
+			}
 		}
-}
 	}
 	
 	focus = {
@@ -4718,7 +4839,7 @@ focus_tree = {
 			
 			
 			
-			IF = {
+			if = {
 				limit = { has_dlc = "Gotterdammerung" }
 				custom_effect_tooltip = generic_skip_one_line_tt
 				custom_effect_tooltip = GER_unlocks_eben_emael_raid_tt
@@ -4756,7 +4877,7 @@ focus_tree = {
 			}
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						59 = {
 							is_fully_controlled_by = ROOT
@@ -4777,10 +4898,83 @@ focus_tree = {
 				}
 			}
 
-			# --- остальные бонусы фокуса без изменений ---
+			# Original focus bonuses
+			if = {
+				limit = {
+					controls_state = 59
+				}
+				59 = { #Hannover
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			else = {
+				random_core_state = {
+					limit = {
+						is_fully_controlled_by = ROOT
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = GER_aeronautical_research_institute
+				bonus = 0.25
+				uses = 2
+				category = air_equipment
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.5
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dlc = "Arms Against Tyranny" }
+				}
+				if = {
+					limit = {
+						has_idea = GER_arado_flugzeugwerke
+					}
+					swap_ideas = {
+						remove_idea = GER_arado_flugzeugwerke
+						add_idea = GER_arado_flugzeugwerke_improved
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = GER_arado_flugzeugwerke
+							add_idea = GER_arado_flugzeugwerke_improved
+						}
+					}
+				}
+			}
+			else = {
+				mio:GER_arado_flugzeugwerke_organization = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+
+					#unlock_mio_trait_tooltip =
+					#unlock_mio_trait_tooltip =
+				}
+			}
 		}
 	}
-	
+
 	focus = {
 		id = GER_dive_bombers
 
@@ -5990,10 +6184,108 @@ focus_tree = {
 				}
 			}
 
-			# --- остальные бонусы фокуса без изменений ---
+			# Original focus bonuses
+			if = {
+				limit = {
+					controls_state = 59
+				}
+				59 = { #Hannover
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			else = {
+				random_owned_state = {
+					limit = {
+						is_controlled_by = ROOT
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.5
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				create_equipment_variant = {
+					name = "Me 262"
+					allow_without_tech = no
+					type = small_plane_airframe_4
+					design_team = mio:GER_messerschmitt_organization
+					modules = {
+						fixed_main_weapon_slot = aircraft_cannon_2_2x
+						fixed_auxiliary_weapon_slot_1 = aircraft_cannon_2_2x
+						engine_type_slot = jet_engine_2x
+						special_type_slot_1 = armor_plate_small
+						special_type_slot_2 = drop_tanks
+						special_type_slot_3 = self_sealing_fuel_tanks_small
+					}
+					icon = "GFX_GER_jet_plane_1_medium"
+					model = "GER_jet_plane_entity"
+				}
+				create_equipment_variant = {
+					name = "Ar 234"
+					allow_without_tech = no
+					type = medium_plane_airframe_4
+					design_team = mio:GER_dornier_organization
+					modules = {
+						fixed_main_weapon_slot = medium_bomb_bay
+						fixed_auxiliary_weapon_slot_1 = medium_bomb_bay
+						fixed_auxiliary_weapon_slot_2 = bomb_locks
+						engine_type_slot = jet_engine_2x
+						special_type_slot_1 = fuel_tanks_medium
+						special_type_slot_2 = empty
+					}
+					icon = "GFX_medium_plane_4_medium"
+					model = "GER_medium_jet_plane_1_entity"
+				}
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+
+			GER_modify_airforce_modifier = yes
+			add_to_variable = {
+				GER_military_air_agility_factor = 0.05
+				tooltip = air_agility_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			GER_add_or_modify_wunderwaffen = yes
+			add_to_variable = {
+				GER_wunderwaffen_sp_tag_jet_speed_factor = GER_wunderwaffe_research_speed_bonus
+				tooltip = sp_tag_jet_speed_factor_tt
+			}
+
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				custom_effect_tooltip = GER_aerodynamic_research_institute_tt
+			}
 		}
 	}
-	
+
 	focus = {
 		id = GER_amerikabomber
 		icon = GFX_focus_GER_amerikabomber
@@ -6498,7 +6790,7 @@ focus_tree = {
 		relative_position_id = GER_expand_kriegsmarinewerft
 		cost = 5
 		available = {
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Man the Guns"
 				}
@@ -6715,7 +7007,7 @@ focus_tree = {
 		relative_position_id = GER_expand_kriegsmarinewerft
 		cost = 10
 		available = {
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Man the Guns"
 				}
@@ -7314,7 +7606,7 @@ focus_tree = {
 			custom_effect_tooltip = generic_skip_one_line_tt
 			custom_effect_tooltip = GER_trade_interdiction_lock_other_focus_tt
 
-			IF = {
+			if = {
 				limit = {
 					GER_karl_donitz = {
 						is_unit_leader = yes
@@ -7478,7 +7770,7 @@ focus_tree = {
 				category = ca_tech
 			}
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc =  "Man the Guns"
 				}
@@ -8400,7 +8692,7 @@ focus_tree = {
 
 			CZE = {
 				effect_tooltip = {
-					IF = {
+					if = {
 						limit = {
 							PREV = {
 								has_government = fascism
@@ -8655,7 +8947,7 @@ focus_tree = {
 		available = {
 			has_war = no
 			is_subject = no
-			IF = {
+			if = {
 				limit = { has_dlc = "Gotterdammerung" }
 
 				custom_trigger_tooltip = {
@@ -8894,7 +9186,7 @@ focus_tree = {
 				}
 				add_state_core = 848
 			}
-			IF = {
+			if = {
 				limit = {
 					975 = {
 						owner = {
@@ -8909,7 +9201,7 @@ focus_tree = {
 				}
 				add_state_core = 975
 			}
-			IF = {
+			if = {
 				limit = {
 					976 = {
 						owner = {
@@ -10247,7 +10539,7 @@ focus_tree = {
 				add_idea = triumphant_will
 			}	
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Gotterdammerung"
 				}
@@ -11212,7 +11504,7 @@ focus_tree = {
 			}
 			NOT = { owns_state = 85 }
 			NOT = { has_war_with = POL }
-			IF = {
+			if = {
 				limit = {
 					NOT = { has_completed_focus = GER_integrate_czechoslovakia }
 				}
@@ -12531,7 +12823,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						OR = {
@@ -12558,7 +12850,7 @@ focus_tree = {
 				name = GER_crossing_the_atlantic
 			}
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Arms Against Tyranny"
 				}
@@ -12775,7 +13067,7 @@ focus_tree = {
 			custom_effect_tooltip = GER_challenge_the_monroe_doctrine_tt
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						USA = {
 							OR = {
@@ -13044,7 +13336,7 @@ focus_tree = {
 
 			else = {
 
-				IF = {
+				if = {
 					limit = {
 						102 = {
 							owner = {
@@ -13066,7 +13358,7 @@ focus_tree = {
 				}
 
 				ELSE = {
-					IF = {
+					if = {
 						limit = {
 							102 = {
 								owner = {
@@ -13090,7 +13382,7 @@ focus_tree = {
 						}
 					}
 					
-					IF = {
+					if = {
 						limit = {
 							853 = {
 								owner = {
@@ -13465,7 +13757,7 @@ focus_tree = {
 				id = germany.98 
 			}
 
-			IF = {
+			if = {
 				limit = {
 					OR = {
 						has_dynamic_modifier = { modifier = GER_mefo_bills_modifier }
@@ -14250,7 +14542,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = { SOV = { has_civil_war = no } }
 				create_wargoal = {
 					type = annex_everything
@@ -14271,7 +14563,7 @@ focus_tree = {
 				}
 			}
 
-			IF = {
+			if = {
 				limit = {
 					KUB = {
 						exists = no
@@ -15182,7 +15474,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = { # if Germany doesn't control Khomas
+			if = { # if Germany doesn't control Khomas
 				limit = {
 					541 = {
 						NOT = {
@@ -15190,7 +15482,7 @@ focus_tree = {
 						}
 					}
 				}
-				IF = { #KHOMAS
+				if = { #KHOMAS
 					limit = {
 						541 = {
 							controller = {
@@ -15286,7 +15578,7 @@ focus_tree = {
 				}
 			}
 
-			IF = { # Germany doesn't control Tanganyika
+			if = { # Germany doesn't control Tanganyika
 				limit = {
 					546 = {
 						NOT = {
@@ -15294,7 +15586,7 @@ focus_tree = {
 						}
 					}
 				}
-				IF = { #TANGANYIKA
+				if = { #TANGANYIKA
 					limit = {
 						546 = {
 							controller = {
@@ -15384,13 +15676,13 @@ focus_tree = {
 				}
 			}
 
-			IF = { #If Germany doesn't control Togo
+			if = { #If Germany doesn't control Togo
 				limit = {
 					777 = {
 						NOT = { is_fully_controlled_by = ROOT }
 					}
 				}
-				IF = { #TOGO
+				if = { #TOGO
 					limit = {
 						777 = {
 							controller = {
@@ -15481,13 +15773,13 @@ focus_tree = {
 				}
 			}
 
-			IF = { #If Germany doesn't control Karas
+			if = { #If Germany doesn't control Karas
 				limit = {
 					893 = {
 						NOT = { is_fully_controlled_by = ROOT }
 					}
 				}
-				IF = { #Karas
+				if = { #Karas
 					limit = {
 						893 = {
 							controller = {
@@ -15578,13 +15870,13 @@ focus_tree = {
 				}
 			}
 
-			IF = { #If Germany doesn't control Kunene
+			if = { #If Germany doesn't control Kunene
 				limit = {
 					894 = {
 						NOT = { is_fully_controlled_by = ROOT}
 					}
 				}
-				IF = { #KUNENE
+				if = { #KUNENE
 					limit = {
 						894 = {
 							controller = {
@@ -15675,13 +15967,13 @@ focus_tree = {
 				}
 			}
 
-			IF = { #If Germany doesn't control Otjozondjupa
+			if = { #If Germany doesn't control Otjozondjupa
 				limit = {
 					895 = {
 						NOT = { is_fully_controlled_by = ROOT}
 					}
 				}
-				IF = { #OTJOZONDJUPA
+				if = { #OTJOZONDJUPA
 					limit = {
 						895 = {
 							controller = {
@@ -15803,7 +16095,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						897 = { #Zambia-Mocambique
@@ -15813,7 +16105,7 @@ focus_tree = {
 				}
 				add_state_claim = 897
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						896 = { #Manica e Sofala
@@ -15823,7 +16115,7 @@ focus_tree = {
 				}
 				add_state_claim = 896 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						544 = { #Lourenco Marques
@@ -15833,7 +16125,7 @@ focus_tree = {
 				}
 				add_state_claim = 544
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						540 = { #Luanda
@@ -15843,7 +16135,7 @@ focus_tree = {
 				}
 				add_state_claim = 540 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						892 = { #South West Angola
@@ -15853,7 +16145,7 @@ focus_tree = {
 				}
 				add_state_claim = 892
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						891 = { #Zambesi
@@ -15863,7 +16155,7 @@ focus_tree = {
 				}
 				add_state_claim = 891 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						295 = { #Leopoldville
@@ -15873,7 +16165,7 @@ focus_tree = {
 				}
 				add_state_claim = 295
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						889 = { #Elisabethville
@@ -15883,7 +16175,7 @@ focus_tree = {
 				}
 				add_state_claim = 889 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						888 = { #Lusambo
@@ -15893,7 +16185,7 @@ focus_tree = {
 				}
 				add_state_claim = 888
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						538 = { #Coquilhatville
@@ -15903,7 +16195,7 @@ focus_tree = {
 				}
 				add_state_claim = 538 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						890 = { #Costermansville
@@ -15913,7 +16205,7 @@ focus_tree = {
 				}
 				add_state_claim = 890
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						769 = { #Burundi
@@ -15923,7 +16215,7 @@ focus_tree = {
 				}
 				add_state_claim = 769 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						768 = { #Rwanda
@@ -15933,7 +16225,7 @@ focus_tree = {
 				}
 				add_state_claim = 768 
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						718 = { #Stanelyville
@@ -15943,7 +16235,7 @@ focus_tree = {
 				}
 				add_state_claim = 718
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						539 = { #Gabon
@@ -15953,7 +16245,7 @@ focus_tree = {
 				}
 				add_state_claim = 539
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						772 = { #Middle Congo
@@ -15963,7 +16255,7 @@ focus_tree = {
 				}
 				add_state_claim = 772
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						297 = { #Equatorial Guinea
@@ -15973,7 +16265,7 @@ focus_tree = {
 				}
 				add_state_claim = 297
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						545 = { #Rhodesia
@@ -15983,7 +16275,7 @@ focus_tree = {
 				}
 				add_state_claim = 545
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						981 = { #Barotziland
@@ -15993,7 +16285,7 @@ focus_tree = {
 				}
 				add_state_claim = 981
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						771 = { #Northeast Rhodesia
@@ -16003,7 +16295,7 @@ focus_tree = {
 				}
 				add_state_claim = 771
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						770 = { #Malawi
@@ -16136,7 +16428,7 @@ focus_tree = {
 			custom_effect_tooltip = GER_claim_old_colonies_in_the_east_tt
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							333 = {
@@ -16178,7 +16470,7 @@ focus_tree = {
 					add_state_claim = 333
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							334 = {
@@ -16219,7 +16511,7 @@ focus_tree = {
 					add_state_claim = 334
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							335 = {
@@ -16261,7 +16553,7 @@ focus_tree = {
 					add_state_claim = 335
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							336 = {
@@ -16302,7 +16594,7 @@ focus_tree = {
 					add_state_claim = 336
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							667 = {
@@ -16343,7 +16635,7 @@ focus_tree = {
 					add_state_claim = 667
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							668 = {
@@ -16384,7 +16676,7 @@ focus_tree = {
 					add_state_claim = 668
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							672 = {
@@ -16425,7 +16717,7 @@ focus_tree = {
 					add_state_claim = 672
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							673 = {
@@ -16467,7 +16759,7 @@ focus_tree = {
 					add_state_claim = 673
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							721 = {
@@ -16508,7 +16800,7 @@ focus_tree = {
 					add_state_claim = 721
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							738 = {
@@ -16549,7 +16841,7 @@ focus_tree = {
 					add_state_claim = 738
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							684 = {
@@ -16590,7 +16882,7 @@ focus_tree = {
 					add_state_claim = 684
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							647 = {
@@ -16631,7 +16923,7 @@ focus_tree = {
 					add_state_claim = 647
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							646 = {
@@ -16672,7 +16964,7 @@ focus_tree = {
 					add_state_claim = 646
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							633 = {
@@ -16713,7 +17005,7 @@ focus_tree = {
 					add_state_claim = 633
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							979 = {
@@ -16754,7 +17046,7 @@ focus_tree = {
 					add_state_claim = 979
 				}
 
-				IF = {
+				if = {
 					limit = {
 						OR = {
 							737 = {
@@ -16831,7 +17123,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					CHI = {
 						has_country_leader = {
@@ -17078,7 +17370,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 			
-			IF = { #singapore
+			if = { #singapore
 				limit = { 336 = { is_fully_controlled_by = ROOT} }
 				336 = {
 					add_dynamic_modifier = {
@@ -17090,7 +17382,7 @@ focus_tree = {
 			}
 
 
-			IF = { #java
+			if = { #java
 				limit = { 335 = { is_fully_controlled_by = ROOT} }
 				335 = {
 					add_dynamic_modifier = {
@@ -17102,7 +17394,7 @@ focus_tree = {
 			}
 
 
-			IF = { #qingdao
+			if = { #qingdao
 				limit = { 743 = { is_fully_controlled_by = ROOT} }
 				743 = {
 					add_dynamic_modifier = {
@@ -17114,7 +17406,7 @@ focus_tree = {
 			}
 
 
-			IF = { #marshall islands
+			if = { #marshall islands
 				limit = { 633 = { is_fully_controlled_by = ROOT} }
 				633 = {
 					add_dynamic_modifier = {
@@ -17126,7 +17418,7 @@ focus_tree = {
 			}
 
 
-			IF = { #saipan
+			if = { #saipan
 				limit = { 646 = { is_fully_controlled_by = ROOT} }
 				646 = {
 					add_dynamic_modifier = {
@@ -17136,7 +17428,7 @@ focus_tree = {
 				}
 			}
 
-			IF = { #if none of the states are controlled by Germany, show tooltip
+			if = { #if none of the states are controlled by Germany, show tooltip
 				limit = {
 					336 = {
 						NOT = {
@@ -17222,7 +17514,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						has_global_flag = falkenhausen_recalled
@@ -21087,7 +21379,7 @@ focus_tree = {
 			}
 
 			custom_effect_tooltip = generic_skip_one_line_tt
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_philipp_holzmann
 				}
@@ -21421,10 +21713,10 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = { has_dlc = "La Resistance" }
 
-				IF = {
+				if = {
 					limit = { has_intelligence_agency = no }
 
 					create_intelligence_agency = {
@@ -21449,7 +21741,7 @@ focus_tree = {
 					modifier = GER_stasi_modifier
 				}
 
-				IF = {
+				if = {
 					limit = {
 						NOT = {
 							has_country_flag = GER_has_done_stasi_focus_flag
@@ -21514,7 +21806,7 @@ focus_tree = {
 		search_filters = {}
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					has_dynamic_modifier = {
 						modifier = GER_stasi_modifier
@@ -21526,7 +21818,7 @@ focus_tree = {
 				custom_effect_tooltip = GER_communist_intel_modifier_intro_tt
 			}
 
-			IF = {
+			if = {
 				limit = { has_dlc = "La Resistance" }
 
 
@@ -21557,7 +21849,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = { has_dlc = "La Resistance"}
 
 				create_operative_leader = {
@@ -21665,7 +21957,7 @@ focus_tree = {
 				override_model = GER_militia_alt_0_entity
 			}
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						any_controlled_state = {
@@ -21919,7 +22211,7 @@ focus_tree = {
 				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
-			IF = {
+			if = {
 				limit = { has_country_flag = GER_thalmann_freed_from_prison_flag }
 
 				GER_ernst_thalmann = {
@@ -22162,7 +22454,7 @@ focus_tree = {
 		search_filters = {}
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					any_country = {
 						has_autonomy_state = autonomy_volkskommissariat
@@ -22204,7 +22496,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					any_country = {
 						has_autonomy_state = autonomy_volkskommissariat
@@ -22718,7 +23010,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = GER_root_out_imperialism_tt
 			GER_set_up_colonial_resistance_states = yes #build array
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						any_other_country = {
@@ -22874,7 +23166,7 @@ focus_tree = {
 					}
 				}
 			}
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Gotterdammerung"
 				}
@@ -23126,7 +23418,7 @@ focus_tree = {
 			custom_effect_tooltip = generic_skip_one_line_tt
 
 			GER_modify_industrial_modifier = yes
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Arms Against Tyranny"
 				}
@@ -23384,7 +23676,7 @@ focus_tree = {
 			custom_effect_tooltip = GER_modify_politburo_modifier_tt
 			add_to_variable = { GER_politburo_conscription = 0.03 tooltip = conscription_tt }
 
-			#IF = {
+			#if = {
 			#	limit = {
 			#		NOT = { has_decision = women_in_the_workforce }
 			#	}
@@ -23393,7 +23685,7 @@ focus_tree = {
 			#		show_effect_tooltip = yes # default is no
 			#		show_modifiers = yes # default is no
 			#	}
-			#	IF = {
+			#	if = {
 			#		limit = { has_war = yes }
 			#		activate_decision = women_in_the_workforce	 
 			#	} 
@@ -23524,7 +23816,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					65 = {
 						is_fully_controlled_by = ROOT
@@ -23754,7 +24046,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					CZE = {
 						OR = {
@@ -23926,7 +24218,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					POL = {
 						OR = {
@@ -24093,7 +24385,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					HUN = {
 						OR = {
@@ -24736,7 +25028,7 @@ focus_tree = {
 				}
 			}
 
-			IF = {
+			if = {
 				limit = {
 					has_country_leader = {
 						ruling_only = yes # default = yes
@@ -25030,7 +25322,7 @@ focus_tree = {
 			show_ideas_tooltip = GER_andreas_hermes
 			show_ideas_tooltip = GER_wilhelm_von_gayl
 
-			IF = {
+			if = {
 				limit = {
 					has_game_rule = {
 						rule = obsolete_focus_branches_visibility
@@ -25248,7 +25540,7 @@ focus_tree = {
 			}
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						has_completed_focus = GER_the_monarchy_compromise_ww
 					}
@@ -25285,7 +25577,7 @@ focus_tree = {
 			show_ideas_tooltip = GER_carl_friedrich_goerdeler
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						has_completed_focus = GER_the_monarchy_compromise_ww
 					}
@@ -25311,7 +25603,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_the_shield_of_democracy_liberalism_idea
 				}
@@ -25345,7 +25637,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						has_rule = can_send_volunteers
@@ -25360,7 +25652,7 @@ focus_tree = {
 
 			custom_effect_tooltip =  generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_the_shield_of_democracy_liberalism_and_welfare_idea
 				}
@@ -25765,7 +26057,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {	has_wargoal_against = HOL }
 					NOT = {	has_war_with = HOL }
@@ -25811,7 +26103,7 @@ focus_tree = {
 				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {	has_wargoal_against = BEL }
 					NOT = {	has_war_with = BEL }
@@ -26028,7 +26320,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						has_rule = can_send_volunteers
@@ -26375,7 +26667,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 			
-			IF = {
+			if = {
 				limit = {
 					BAY = {
 						exists = no
@@ -26500,7 +26792,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_fan_prussian_militarism_idea_3
 				}
@@ -26536,7 +26828,7 @@ focus_tree = {
  
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_fan_prussian_militarism_idea_2
 				}
@@ -26552,7 +26844,7 @@ focus_tree = {
 				}
 			}
 			
-			IF = {
+			if = {
 				limit = {
 					PRE = {
 						exists = no
@@ -26621,7 +26913,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_reichswerke
 				}
@@ -26708,13 +27000,13 @@ focus_tree = {
 				country_event = { id = wtt_germany.17 }
 			}
 
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_expatriated_communists_return_home_ns
 				}
 				remove_ideas = GER_expatriated_communists_return_home_ns	
 			}
-			IF = {
+			if = {
 				limit = {
 					has_idea = GER_expatriated_communists_return_home_supressed_ns
 				}
@@ -26794,7 +27086,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					912 = {
 						is_controlled_by = DEN
@@ -26912,7 +27204,7 @@ focus_tree = {
 
 			add_political_power = 50
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "La Resistance"
 				}
@@ -27085,7 +27377,7 @@ focus_tree = {
 				}
 
 				AUS = {
-					IF = {
+					if = {
 						limit = {
 							has_completed_focus = AUS_bring_generals_out_of_retirement
 						}
@@ -27106,7 +27398,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					HUN = {
 						exists = yes
@@ -27305,7 +27597,7 @@ focus_tree = {
 				add_idea = GER_mitteleuropa_customs_union_member_upgraded
 			}	
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						any_other_country = {
@@ -27392,7 +27684,7 @@ focus_tree = {
 				show_effect_tooltip = no
 			}	
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Gotterdammerung"
 				}
@@ -27506,7 +27798,7 @@ focus_tree = {
 						add_to_faction = AUS
 					}
 
-					IF = {
+					if = {
 						limit = {
 							has_government = neutrality
 							AUS = {
@@ -27681,7 +27973,7 @@ focus_tree = {
 				add_core_of = ROOT
 			}
 
-			IF = {
+			if = {
 				limit = {
 					OR = {
 						is_in_faction_with = AUS
@@ -27730,7 +28022,7 @@ focus_tree = {
 						}
 					}
 
-					IF = {
+					if = {
 						limit = {
 							POL = {
 								OR = {
@@ -27742,7 +28034,7 @@ focus_tree = {
 								}
 							}
 						}
-						IF = {
+						if = {
 							limit = {
 								is_in_faction_with = HUN
 							}
@@ -27792,7 +28084,7 @@ focus_tree = {
 								}
 							}
 						}
-						IF = {
+						if = {
 							limit = {
 								is_in_faction_with = HUN
 							}
@@ -28080,7 +28372,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					762 = {
 						NOT = {
@@ -28096,7 +28388,7 @@ focus_tree = {
 				}
 			}
 
-			IF = {
+			if = {
 				limit = {
 					is_in_faction_with = AUS
 				}
@@ -28173,7 +28465,7 @@ focus_tree = {
 				}
 				custom_effect_tooltip = if_they_accept_tt 
 				effect_tooltip = {
-					IF = {
+					if = {
 						limit = {
 							is_in_faction_with = AUS
 						}
@@ -28235,7 +28527,7 @@ focus_tree = {
 				}
 				custom_effect_tooltip = if_they_accept_tt 
 				effect_tooltip = {
-					IF = {
+					if = {
 						limit = {
 							is_in_faction_with = AUS
 						}
@@ -28431,7 +28723,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					is_in_faction_with = HUN 
 				}
@@ -28522,7 +28814,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = if_they_accept_tt 
 			effect_tooltip = {
-				IF = {
+				if = {
 					limit = {
 						is_in_faction_with = HUN
 					}
@@ -28640,7 +28932,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						any_other_country = {
@@ -28923,7 +29215,7 @@ focus_tree = {
 
 			add_ideas = GER_holy_roman_empire_of_the_german_nation_idea
 
-			IF = {
+			if = {
 				limit = {
 					has_dlc = "Gotterdammerung"
 				}
@@ -29032,14 +29324,14 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					has_government = neutrality
 				}
 				add_country_leader_trait = GER_sword_of_islam_trait
 			}
 
-			IF = {
+			if = {
 				limit = {
 					TUR = {
 						exists = yes
@@ -29164,7 +29456,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = if_they_accept_tt
 			effect_tooltip = {
-				IF = {
+				if = {
 					limit = {
 						has_government = neutrality
 					}
@@ -29304,7 +29596,7 @@ focus_tree = {
 			custom_effect_tooltip = generic_skip_one_line_tt
 
 			hidden_effect = { news_event = { id = wtt_news.21 days = 2 } }
-			IF = {
+			if = {
 				limit = {
 					SOV = {
 						has_government = communism
@@ -29653,7 +29945,7 @@ focus_tree = {
 				
 				effect_tooltip = {
 					custom_effect_tooltip = tributes_from_lithuania_tt
-					IF = {
+					if = {
 						limit = {
 							LIT = {
 								owns_state = 188
@@ -29708,7 +30000,7 @@ focus_tree = {
 					}	
 					custom_effect_tooltip = GER_will_also_recieve_trade_and_civs_tt
 
-					IF = {
+					if = {
 						limit = {
 							ROOT = {
 								NOT = {
@@ -29938,7 +30230,7 @@ focus_tree = {
 
 			custom_effect_tooltip =  generic_skip_one_line_tt
 			
-			IF = {
+			if = {
 				limit = {
 					has_war_with = SOV
 				}
@@ -29986,7 +30278,7 @@ focus_tree = {
 			custom_effect_tooltip = GER_liberate_oppressed_people_tt
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					AND = {
 						218 = {
@@ -30013,7 +30305,7 @@ focus_tree = {
 					add_state_core = 238
 				}
 			}
-			IF = {
+			if = {
 				limit = {
 					AND = {
 						234 = {
@@ -30084,7 +30376,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						any_country = {
@@ -30161,7 +30453,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					SOV = {
 						has_government = communism
@@ -30387,7 +30679,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					has_completed_focus = GER_safeguard_poland
 					POL = {
@@ -30683,7 +30975,7 @@ focus_tree = {
 				value = 50
 			}
 
-			IF = {
+			if = {
 				limit = {
 					SOV = {
 						has_government = communism
@@ -31135,7 +31427,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					POL = {
 						is_subject_of = ROOT
@@ -31165,7 +31457,7 @@ focus_tree = {
 				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
-			IF = {
+			if = {
 				limit = {
 					any_country = {
 						NOT = {
@@ -31230,7 +31522,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					GEO = {
 						exists = no
@@ -31285,7 +31577,7 @@ focus_tree = {
 		completion_reward = {
 
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						POL = {
 							exists = no
@@ -31407,7 +31699,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = {
+			if = {
 				limit = {
 					has_government = neutrality
 				}
@@ -31444,7 +31736,7 @@ focus_tree = {
 							popularity = 0.1
 						}
 
-						IF = {
+						if = {
 							limit = {
 								has_completed_focus = FIN_greater_finland
 							}
@@ -31875,7 +32167,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			IF = { # Luxembourg
+			if = { # Luxembourg
 				limit = {
 					8 = {
 						NOT = {
@@ -31890,7 +32182,7 @@ focus_tree = {
 					add_claim_by = ROOT
 				}
 			}
-			IF = { # Ardennes
+			if = { # Ardennes
 				limit = {
 					980 = {
 						NOT = {
@@ -31995,7 +32287,7 @@ focus_tree = {
 			add_state_claim = 3
 			add_state_claim = 151
 			add_state_claim = 847
-			IF = {
+			if = {
 				limit = {
 					ITA = {
 						OR = {
@@ -32133,7 +32425,7 @@ focus_tree = {
 				set_state_name = 8_lux_name
 				add_extra_state_shared_building_slots = 4
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = BEL
@@ -32166,7 +32458,7 @@ focus_tree = {
 					add_extra_state_shared_building_slots = 2
 				}
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = SWI
@@ -32212,7 +32504,7 @@ focus_tree = {
 				add_state_core = 847
 				add_state_core = 151
 			}
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = ITA
@@ -32366,7 +32658,7 @@ focus_tree = {
 					override_model = GER_infantry_alt_3_entity
 				}
 
-				IF = {
+				if = {
 					limit = {
 						has_dlc = "Battle for the Bosporus"
 					}
@@ -33022,7 +33314,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = FRA
@@ -33052,7 +33344,7 @@ focus_tree = {
 				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = POR
@@ -33075,7 +33367,7 @@ focus_tree = {
 				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
-			IF = {
+			if = {
 				limit = {
 					NOT = {
 						is_in_faction_with = HOL
@@ -33315,7 +33607,7 @@ focus_tree = {
 						days = 365
 					}	
 
-					IF = {
+					if = {
 						limit = {
 							has_dlc = "Arms Against Tyranny"
 						}
@@ -34115,7 +34407,7 @@ focus_tree = {
 			}
 
 			#This section is only commented out and not deleted in case we like the tooltips better
-			#IF = {
+			#if = {
 			#	limit = {
 			#		RAJ = {
 			#			exists = yes 
@@ -34135,7 +34427,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		PAK = {
 			#			exists = yes 
@@ -34155,7 +34447,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		BRM = {
 			#			exists = yes 
@@ -34175,7 +34467,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		SIA = {
 			#			exists = yes 
@@ -34195,7 +34487,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		AST = {
 			#			exists = yes 
@@ -34215,7 +34507,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		NZL = {
 			#			exists = yes 
@@ -34235,7 +34527,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		MAL = {
 			#			exists = yes 
@@ -34255,7 +34547,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		INS = {
 			#			exists = yes 
@@ -34275,7 +34567,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		BAN = {
 			#			exists = yes 
@@ -34295,7 +34587,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		PNG = {
 			#			exists = yes 
@@ -34315,7 +34607,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		SOL = {
 			#			exists = yes 
@@ -34335,7 +34627,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		SRL = {
 			#			exists = yes 
@@ -34355,7 +34647,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		MLD = {
 			#			exists = yes 
@@ -34375,7 +34667,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		SAM = {
 			#			exists = yes 
@@ -34395,7 +34687,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		FIJ = {
 			#			exists = yes 
@@ -34415,7 +34707,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		GUM = {
 			#			exists = yes 
@@ -34435,7 +34727,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		PHI = {
 			#			exists = yes 
@@ -34455,7 +34747,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		HAW = {
 			#			exists = yes 
@@ -34475,7 +34767,7 @@ focus_tree = {
 			#		expire = 0
 			#	}	
 			#}
-			#IF = {
+			#if = {
 			#	limit = {
 			#		RAP = {
 			#			exists = yes 
