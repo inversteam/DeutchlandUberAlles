@@ -4994,10 +4994,10 @@ focus_tree = {
 				tooltip = consumer_goods_factor_tt
 			}
 
-		custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
 
-		custom_effect_tooltip = GER_aeronautical_research_institute_facility_tt
-		hidden_effect = {
+			custom_effect_tooltip = GER_aeronautical_research_institute_facility_tt
+			hidden_effect = {
 			if = {
 				limit = {
 					59 = {
@@ -6285,10 +6285,10 @@ focus_tree = {
 				tooltip = consumer_goods_factor_tt
 			}
 
-		custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
 
-		custom_effect_tooltip = GER_aerodynamic_research_institute_facility_tt
-		hidden_effect = {
+			custom_effect_tooltip = GER_aerodynamic_research_institute_facility_tt
+			hidden_effect = {
 				if = {
 					limit = {
 						61 = {
